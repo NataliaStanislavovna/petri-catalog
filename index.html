@@ -142,7 +142,7 @@ const sortV = (a,b) => {
   const kb = b.count==null ? Infinity : b.count;
   return ka - kb || a.id.localeCompare(b.id);
 };
-const cntLabel = c => c.tntc ? (c.count!=null ? `слив ~${c.count}` : 'слив (TNTC)') : (c.count!=null ? c.count : '—');
+const cntLabel = c => c.tntc ? (c.count!=null ? `TNTC ~${c.count}` : 'TNTC') : (c.count!=null ? c.count : '—');
 const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function fillFilters() {
@@ -162,7 +162,7 @@ function applyFilters() {
 }
 function cardHTML(c, center) {
   return `<div class="tcard ${center?'center':''}" data-id="${c.id}">
-    ${c.tntc?'<span class="badge">слив</span>':''}
+    ${c.tntc?'<span class="badge">TNTC</span>':''}
     <span class="badge seed">${c.seeding}</span>
     <img loading="lazy" src="${c.img}" alt="${c.row}${c.col}">
     <div class="cap"><b>${c.row}${c.col}</b> · ${cntLabel(c)}<br>${esc(c.organism)}</div>
@@ -189,7 +189,7 @@ function renderTape() {
 function renderGrid() {
   document.getElementById('grid').innerHTML = view.map(c=>`
     <div class="gcard" data-id="${c.id}">
-      ${c.tntc?'<span class="badge">слив</span>':''}
+      ${c.tntc?'<span class="badge">TNTC</span>':''}
       <img loading="lazy" src="${c.img}" alt="">
       <div class="cap"><b>${c.row}${c.col}</b> · ${cntLabel(c)} · п${c.seeding}</div>
     </div>`).join('');
@@ -216,7 +216,7 @@ function openCard(id) {
       <tr><td>LED</td><td>${esc(c.led||'—')}</td></tr>
       <tr><td>Лазер</td><td>${esc(c.laser||'—')}</td></tr>
       <tr><td>Вещество</td><td>${esc(c.substance||'—')}</td></tr>
-      <tr><td>Колонии</td><td><b>${cntLabel(c)}</b>${c.tntc?' (сплошной рост)':''}</td></tr>
+      <tr><td>Колонии</td><td><b>${cntLabel(c)}</b>${c.tntc?' (too numerous to count)':''}</td></tr>
     </table>
     ${twin?`<div class="twin" id="twin"><img src="${twin.img}" alt="">
       <div class="t"><b>Парный посев ${twin.seeding}</b> · лунка ${c.row}${c.col}<br>
