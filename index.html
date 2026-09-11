@@ -12,8 +12,11 @@
 * { box-sizing:border-box; margin:0; padding:0; }
 body { font-family:-apple-system,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); padding:8px; }
 
-/* верхняя компактная панель */
-.top { display:flex; align-items:center; gap:8px; padding:4px 2px 8px; }
+/* верхняя компактная панель — всегда видна сверху */
+.top { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center;
+  gap:8px; padding:6px 10px; background:rgba(18,20,31,.92); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); }
+body { padding-top:48px; }
 .top h1 { color:var(--accent); font-size:1em; white-space:nowrap; }
 .fbtn { background:var(--card); color:var(--text); border:1px solid var(--border);
   border-radius:10px; padding:6px 12px; cursor:pointer; font-size:.82em; margin-left:auto; white-space:nowrap; }
