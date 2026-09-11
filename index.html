@@ -38,7 +38,8 @@ body { font-family:-apple-system,'Segoe UI',sans-serif; background:var(--bg); co
 .backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:55; display:none; }
 .backdrop.open { display:block; }
 
-/* лента роста */
+/* лента роста: на телефоне ВЕРТИКАЛЬНАЯ колонка (телефон длинный),
+   на компьютере — горизонтальный ряд */
 .tape { display:flex; gap:6px; align-items:stretch; overflow-x:auto; padding:2px 0 8px;
   scrollbar-width:none; }
 .tape::-webkit-scrollbar { display:none; }
@@ -53,6 +54,19 @@ body { font-family:-apple-system,'Segoe UI',sans-serif; background:var(--bg); co
   border-radius:7px; padding:1px 6px; font-size:.68em; font-weight:700; z-index:2; }
 .badge.seed { left:auto; right:9px; background:var(--accent); color:#0b1020; }
 .tape-hint { text-align:center; color:var(--dim); font-size:.72em; margin:0 0 4px; }
+
+/* вертикальная колонка на телефоне: карточки в столбик */
+@media (max-width:699px) {
+  .tape { flex-direction:column; overflow-x:visible; gap:8px; }
+  .tcard { flex:0 0 auto; flex-direction:row; align-items:center; gap:8px;
+    padding:8px; border-radius:14px; }
+  .tcard img { width:31vw; max-width:140px; aspect-ratio:1; flex:0 0 auto; }
+  .tcard .cap { margin-top:0; font-size:.82em; flex:1; min-width:0; }
+  .tcard.center { flex-direction:row; }
+  .tcard.center img { width:42vw; max-width:190px; }
+  .tcard.center .cap { font-size:.95em; }
+  .tape-hint { font-size:.7em; }
+}
 
 /* сетка */
 .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(31%,1fr)); gap:6px; }
@@ -158,9 +172,16 @@ function renderTape() {
   document.querySelectorAll('.tcard').forEach(el=>{
     el.addEventListener('click', ()=>{
       if (el.classList.contains('center')) openCard(el.dataset.id);
-      else { centerIdx = view.findIndex(c=>c.id===el.dataset.id); render(); }
+      else { centerIdx = view.findIndex(c=>c.id===el.dataset.id); render();
+        // на вертикальной ленте прокрутить выбранную карточку в поле зрения
+        const el2 = document.querySelector('.tcard.center');
+        if (el2) el2.scrollIntoView({behavior:'smooth', block:'center'});
+      }
     });
   });
+  // центр всегда в зоне видимости
+  const c0 = document.querySelector('.tcard.center');
+  if (c0) requestAnimationFrame(()=>c0.scrollIntoView({block:'center', inline:'center'}));
 }
 function renderGrid() {
   document.getElementById('grid').innerHTML = view.map(c=>`
