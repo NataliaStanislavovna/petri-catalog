@@ -160,12 +160,13 @@ function applyFilters() {
   document.getElementById('cnt').textContent = view.length;
   render();
 }
+const wellOf = c => (c.row && c.col) ? `${c.row}${c.col}` : '⬜';
 function cardHTML(c, center) {
   return `<div class="tcard ${center?'center':''}" data-id="${c.id}">
     ${c.tntc?'<span class="badge">TNTC</span>':''}
     <span class="badge seed">${c.seeding}</span>
-    <img loading="lazy" src="${c.img}" alt="${c.row}${c.col}">
-    <div class="cap"><b>${c.row}${c.col}</b> · ${cntLabel(c)}<br>${esc(c.organism)}</div>
+    <img loading="lazy" src="${c.img}" alt="${wellOf(c)}">
+    <div class="cap"><b>${wellOf(c)}</b> · ${cntLabel(c)}<br>${esc(c.label || c.organism)}</div>
   </div>`;
 }
 function renderTape() {
@@ -191,7 +192,7 @@ function renderGrid() {
     <div class="gcard" data-id="${c.id}">
       ${c.tntc?'<span class="badge">TNTC</span>':''}
       <img loading="lazy" src="${c.img}" alt="">
-      <div class="cap"><b>${c.row}${c.col}</b> · ${cntLabel(c)} · п${c.seeding}</div>
+      <div class="cap"><b>${wellOf(c)}</b> · ${cntLabel(c)} · п${c.seeding}</div>
     </div>`).join('');
   document.querySelectorAll('.gcard').forEach(el=>el.addEventListener('click',()=>openCard(el.dataset.id)));
 }
@@ -207,11 +208,12 @@ function openCard(id) {
   document.getElementById('modal').innerHTML = `
     <button class="close" id="mclose">✕</button>
     <img class="main" src="${c.img}" alt="">
-    <h3>Чашка ${c.row}${c.col} · ${esc(c.organism)}</h3>
+    <h3>Чашка ${wellOf(c)} · ${esc(c.organism)}</h3>
     <table>
       <tr><td>Эксперимент</td><td>${esc(c.experiment)}</td></tr>
       <tr><td>Дата эксперимента</td><td>${c.date}</td></tr>
-      <tr><td>Лунка</td><td>${c.row}${c.col}</td></tr>
+      <tr><td>Лунка</td><td>${wellOf(c)}${c.row?'':' <i style="color:var(--dim)">(не указана — посмотри на подпись маркером)</i>'}</td></tr>
+      <tr><td>Подпись на чашке</td><td>${esc(c.label||'—')}</td></tr>
       <tr><td>Посев</td><td>${c.seeding}</td></tr>
       <tr><td>LED</td><td>${esc(c.led||'—')}</td></tr>
       <tr><td>Лазер</td><td>${esc(c.laser||'—')}</td></tr>
