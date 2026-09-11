@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Каталог чашек Петри</title>
+<style>
+:root {
+  --bg:#12141f; --panel:#1c1f31; --card:#232742; --border:#34395e;
+  --text:#e8eaf6; --dim:#9aa0c3; --accent:#7ec8ff; --accent2:#ff6b8a; --ok:#69f0ae;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:-apple-system,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); padding:14px; }
+h1 { color:var(--accent); font-size:1.25em; text-align:center; margin-bottom:4px; }
+.sub { text-align:center; color:var(--dim); font-size:.85em; margin-bottom:12px; }
+
+/* фильтры */
+.filters { background:var(--panel); border-radius:14px; padding:12px; margin-bottom:14px; }
+.frow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.frow + .frow { margin-top:8px; }
+label { color:var(--dim); font-size:.8em; }
+select, input[type=text], input[type=date], input[type=number] {
+  background:var(--card); color:var(--text); border:1px solid var(--border);
+  border-radius:8px; padding:6px 10px; font-size:.9em; max-width:100%;
+}
+.btn { background:var(--card); color:var(--text); border:1px solid var(--border);
+  border-radius:8px; padding:6px 12px; cursor:pointer; font-size:.85em; }
+.btn.active { background:var(--accent); color:#0b1020; border-color:var(--accent); font-weight:600; }
+.btn.ghost { border-color:transparent; color:var(--dim); }
+.count { color:var(--dim); font-size:.82em; margin-left:auto; }
+
+/* лента роста */
+.tape { display:flex; gap:10px; align-items:stretch; overflow-x:auto; padding:4px 0 10px; }
+.tcard { background:var(--card); border:2px solid var(--border); border-radius:14px;
+  padding:8px; min-width:150px; max-width:190px; flex:1; cursor:pointer; position:relative;
+  display:flex; flex-direction:column; }
+.tcard.center { border-color:var(--accent); box-shadow:0 0 18px rgba(126,200,255,.25); min-width:220px; max-width:260px; }
+.tcard img { width:100%; border-radius:10px; aspect-ratio:1; object-fit:cover; background:#000; }
+.tcard .cap { font-size:.78em; color:var(--dim); margin-top:6px; line-height:1.45; }
+.tcard .cap b { color:var(--text); font-size:1.05em; }
+.badge { position:absolute; top:12px; left:12px; background:var(--accent2); color:#fff;
+  border-radius:8px; padding:2px 7px; font-size:.72em; font-weight:700; }
+.badge.seed { left:auto; right:12px; background:var(--accent); color:#0b1020; }
+.tcard .nav { display:flex; justify-content:space-between; margin-top:auto; padding-top:6px; }
+.tcard .nav span { color:var(--accent); font-size:1.3em; cursor:pointer; user-select:none; padding:0 8px; }
+
+/* сетка всех карточек */
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
+.gcard { background:var(--card); border-radius:12px; overflow:hidden; cursor:pointer; border:1px solid var(--border); }
+.gcard img { width:100%; aspect-ratio:1; object-fit:cover; display:block; }
+.gcard .cap { padding:6px 8px; font-size:.75em; color:var(--dim); line-height:1.4; }
+.gcard .cap b { color:var(--text); }
+
+/* модальная карточка */
+.overlay { position:fixed; inset:0; background:rgba(5,8,18,.85); display:none;
+  align-items:center; justify-content:center; z-index:50; padding:16px; }
+.overlay.open { display:flex; }
+.modal { background:var(--panel); border-radius:16px; max-width:720px; width:100%;
+  max-height:92vh; overflow:auto; padding:16px; position:relative; }
+.modal img.main { width:100%; max-height:46vh; object-fit:contain; border-radius:12px; background:#000; }
+.modal h3 { color:var(--accent); margin:10px 0 6px; font-size:1em; }
+.modal table { width:100%; border-collapse:collapse; font-size:.86em; }
+.modal td { padding:5px 8px; border-bottom:1px solid var(--border); vertical-align:top; }
+.modal td:first-child { color:var(--dim); white-space:nowrap; width:38%; }
+.twin { margin-top:10px; background:var(--card); border-radius:12px; padding:10px;
+  display:flex; gap:12px; align-items:center; cursor:pointer; }
+.twin img { width:86px; height:86px; border-radius:10px; object-fit:cover; }
+.twin .t { font-size:.82em; color:var(--dim); line-height:1.5; }
+.close { position:absolute; top:10px; right:14px; font-size:1.5em; color:var(--dim);
+  cursor:pointer; background:none; border:none; }
+.demo { background:#3a2b3f; border-radius:8px; padding:4px 10px; color:#e3b7ec;
+  font-size:.75em; text-align:center; margin-bottom:10px; }
+.tape-wrap { position:relative; }
+.tape-hint { text-align:center; color:var(--dim); font-size:.8em; margin:2px 0 6px; }
+@media (max-width:640px){ .tcard{min-width:110px;} .tcard.center{min-width:150px;} }
+</style>
+</head>
+<body>
+<h1>🧫 Каталог чашек Петри</h1>
+<div class="sub">лента роста · фильтры · карточки — прототип</div>
+
+<div class="filters">
+  <div class="frow">
+    <label>Организм</label><select id="f_org"></select>
+    <label>Эксперимент</label><select id="f_exp"></select>
+    <label>Посев</label><select id="f_seed">
+      <option value="">все</option><option value="1">1</option><option value="2">2</option>
+    </select>
+    <label>LED</label><select id="f_led"></select>
+    <span class="count" id="cnt"></span>
+  </div>
+  <div class="frow">
+    <button class="btn ghost" id="reset">сбросить фильтры</button>
+    <button class="btn" id="mode">вид: лента роста</button>
+  </div>
+</div>
+
+<div class="demo">⚠ Числа колоний в прототипе — демонстрационные. Фото: эксперимент 13.05.2026, оба посева.</div>
+
+<div class="tape-wrap" id="tape_wrap">
+  <div class="tape-hint">← меньше колоний &nbsp;·&nbsp; лента роста &nbsp;·&nbsp; больше колоний →</div>
+  <div class="tape" id="tape"></div>
+</div>
+
+<div class="grid" id="grid" style="display:none"></div>
+
+<div class="overlay" id="ov">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+let CARDS = [], view = [], mode = 'tape', centerIdx = 0;
+
+const sortV = (a,b) => {
+  const ka = a.tntc && a.count==null ? Infinity : (a.count==null ? Infinity-1 : a.count);
+  const kb = b.tntc && b.count==null ? Infinity : (b.count==null ? Infinity-1 : b.count);
+  return ka - kb || a.id.localeCompare(b.id);
+};
+const cntLabel = c => c.tntc ? (c.count!=null ? `слив ~${c.count}` : 'слив (TNTC)') : (c.count!=null ? c.count : '—');
+
+function fillFilters() {
+  const uniq = k => [...new Set(CARDS.map(c=>c[k]).filter(Boolean))].sort();
+  for (const [id,k] of [['f_org','organism'],['f_exp','experiment'],['f_led','led']]) {
+    const s = document.getElementById(id);
+    s.innerHTML = '<option value="">все</option>' + uniq(k).map(v=>`<option>${esc(v)}</option>`).join('');
+  }
+}
+function applyFilters() {
+  const org = f_org.value, exp = f_exp.value, seed = f_seed.value, led = f_led.value;
+  view = CARDS.filter(c =>
+    (!org || c.organism===org) && (!exp || c.experiment===exp) &&
+    (!seed || c.seeding==seed) && (!led || c.led===led)
+  ).sort(sortV);
+  centerIdx = Math.floor(view.length/2);
+  document.getElementById('cnt').textContent = view.length + ' чашек';
+  render();
+}
+function esc(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function cardHTML(c, center) {
+  return `<div class="tcard ${center?'center':''}" data-id="${c.id}">
+    ${c.tntc?'<span class="badge">слив</span>':''}
+    <span class="badge seed">посев ${c.seeding}</span>
+    <img loading="lazy" src="${c.img}" alt="${c.row}${c.col}">
+    <div class="cap"><b>${c.row}${c.col}</b> · ${esc(c.organism)}<br>
+      колонии: <b>${cntLabel(c)}</b><br>${esc(c.led||'')}</div>
+  </div>`;
+}
+function renderTape() {
+  const around = 3; // на десктопе до 7, на мобиле CSS сожмёт
+  const from = Math.max(0, centerIdx-around), to = Math.min(view.length, centerIdx+around+1);
+  let h = '';
+  for (let i=from;i<to;i++) h += cardHTML(view[i], i===centerIdx);
+  document.getElementById('tape').innerHTML = h;
+  document.querySelectorAll('.tcard').forEach(el=>{
+    el.addEventListener('click', ()=>openCard(el.dataset.id));
+  });
+  // клик по центральной — открыть карточку; по боковым — перецентровать
+  const cards = document.querySelectorAll('.tcard');
+  cards.forEach((el,i)=>{ if(!el.classList.contains('center')){
+    el.addEventListener('click', e=>{ e.stopImmediatePropagation();
+      const id = el.dataset.id; centerIdx = view.findIndex(c=>c.id===id); render(); });
+  }});
+}
+function renderGrid() {
+  document.getElementById('grid').innerHTML = view.map(c=>`
+    <div class="gcard" data-id="${c.id}">
+      ${c.tntc?'<span class="badge">слив</span>':''}
+      <img loading="lazy" src="${c.img}" alt="">
+      <div class="cap"><b>${c.row}${c.col}</b> · ${cntLabel(c)} · посев ${c.seeding}</div>
+    </div>`).join('');
+  document.querySelectorAll('.gcard').forEach(el=>el.addEventListener('click',()=>openCard(el.dataset.id)));
+}
+function render() {
+  document.getElementById('tape_wrap').style.display = mode==='tape' ? '' : 'none';
+  document.getElementById('grid').style.display = mode==='grid' ? '' : 'none';
+  document.getElementById('mode').textContent = 'вид: ' + (mode==='tape'?'лента роста':'все чашки');
+  if (mode==='tape') renderTape(); else renderGrid();
+}
+function openCard(id) {
+  const c = CARDS.find(x=>x.id===id); if(!c) return;
+  const twin = CARDS.find(x=>x.row===c.row && x.col===c.col && x.seeding!==c.seeding);
+  document.getElementById('modal').innerHTML = `
+    <button class="close" id="mclose">✕</button>
+    <img class="main" src="${c.img}" alt="">
+    <h3>Чашка ${c.row}${c.col} · ${esc(c.organism)}</h3>
+    <table>
+      <tr><td>Эксперимент</td><td>${esc(c.experiment)}</td></tr>
+      <tr><td>Дата эксперимента</td><td>${c.date}</td></tr>
+      <tr><td>Лунка</td><td>${c.row}${c.col}</td></tr>
+      <tr><td>Посев</td><td>${c.seeding}</td></tr>
+      <tr><td>LED</td><td>${esc(c.led||'—')}</td></tr>
+      <tr><td>Лазер</td><td>${esc(c.laser||'—')}</td></tr>
+      <tr><td>Вещество</td><td>${esc(c.substance||'—')}</td></tr>
+      <tr><td>Колонии</td><td><b>${cntLabel(c)}</b>${c.tntc?' (сплошной рост)':''}</td></tr>
+    </table>
+    ${twin?`<div class="twin" id="twin"><img src="${twin.img}" alt="">
+      <div class="t"><b>Парный посев ${twin.seeding}</b> — та же лунка ${c.row}${c.col}<br>
+      колонии: ${cntLabel(twin)}<br><span style="color:var(--accent)">нажми, чтобы открыть →</span></div></div>`:''}`;
+  document.getElementById('ov').classList.add('open');
+  document.getElementById('mclose').addEventListener('click',()=>document.getElementById('ov').classList.remove('open'));
+  if (twin) document.getElementById('twin').addEventListener('click',()=>openCard(twin.id));
+}
+document.getElementById('ov').addEventListener('click',e=>{
+  if(e.target.id==='ov') e.target.classList.remove('open');
+});
+
+fetch('data/cards.json').then(r=>r.json()).then(d=>{
+  CARDS = d; fillFilters(); applyFilters();
+});
+['f_org','f_exp','f_seed','f_led'].forEach(id=>document.getElementById(id).addEventListener('change',applyFilters));
+document.getElementById('reset').addEventListener('click',()=>{
+  ['f_org','f_exp','f_seed','f_led'].forEach(id=>document.getElementById(id).value='');
+  applyFilters();
+});
+document.getElementById('mode').addEventListener('click',()=>{
+  mode = mode==='tape'?'grid':'tape'; render();
+});
+</script>
+</body>
+</html>
