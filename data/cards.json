@@ -8,12 +8,14 @@
   "col": 1,
   "tntc": false,
   "temp_final": null,
-  "label": "A1",
+  "label": "A1 · LED 0 мин",
   "seeding": 1,
   "img": "photos/20260930_01.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 170,
-  "led": 0
+  "led": 0,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_02",
@@ -24,12 +26,14 @@
   "col": 4,
   "tntc": false,
   "temp_final": null,
-  "label": "A4",
+  "label": "A4 · LED 0 мин",
   "seeding": 1,
   "img": "photos/20260930_02.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 978,
-  "led": 0
+  "led": 0,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_03",
@@ -40,12 +44,14 @@
   "col": 7,
   "tntc": false,
   "temp_final": null,
-  "label": "A7",
+  "label": "A7 · LED 0 мин",
   "seeding": 1,
   "img": "photos/20260930_03.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 514,
-  "led": 0
+  "led": 0,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_04",
@@ -56,12 +62,14 @@
   "col": 10,
   "tntc": false,
   "temp_final": null,
-  "label": "A10",
+  "label": "A10 · LED 0 мин",
   "seeding": 1,
   "img": "photos/20260930_04.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 564,
-  "led": 0
+  "led": 0,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_05",
@@ -72,12 +80,14 @@
   "col": 1,
   "tntc": false,
   "temp_final": 68,
-  "label": "C1",
+  "label": "C1 · LED 5 мин · T фин 68°C",
   "seeding": 1,
   "img": "photos/20260930_05.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 11,
-  "led": 5
+  "led": 5,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_06",
@@ -88,12 +98,14 @@
   "col": 4,
   "tntc": false,
   "temp_final": 70,
-  "label": "C4",
+  "label": "C4 · LED 5 мин · T фин 70°C",
   "seeding": 1,
   "img": "photos/20260930_06.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 8,
-  "led": 5
+  "led": 5,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_07",
@@ -104,12 +116,14 @@
   "col": 7,
   "tntc": false,
   "temp_final": 69,
-  "label": "C7",
+  "label": "C7 · LED 5 мин · T фин 69°C",
   "seeding": 1,
   "img": "photos/20260930_07.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 13,
-  "led": 5
+  "led": 5,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_08",
@@ -120,12 +134,14 @@
   "col": 10,
   "tntc": false,
   "temp_final": 68,
-  "label": "C10",
+  "label": "C10 · LED 5 мин · T фин 68°C",
   "seeding": 1,
   "img": "photos/20260930_08.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 294,
-  "led": 5
+  "led": 5,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_09",
@@ -136,12 +152,14 @@
   "col": 1,
   "tntc": false,
   "temp_final": 73,
-  "label": "E1",
+  "label": "E1 · LED 10 мин · T фин 73°C",
   "seeding": 1,
   "img": "photos/20260930_09.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 16,
-  "led": 10
+  "led": 10,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_10",
@@ -152,12 +170,14 @@
   "col": 4,
   "tntc": false,
   "temp_final": 73,
-  "label": "E4",
+  "label": "E4 · LED 10 мин · T фин 73°C",
   "seeding": 1,
   "img": "photos/20260930_10.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 0,
-  "led": 10
+  "led": 10,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_11",
@@ -168,12 +188,14 @@
   "col": 7,
   "tntc": false,
   "temp_final": 73,
-  "label": "E7",
+  "label": "E7 · LED 10 мин · T фин 73°C",
   "seeding": 1,
   "img": "photos/20260930_11.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 1,
-  "led": 10
+  "led": 10,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_12",
@@ -184,12 +206,14 @@
   "col": 10,
   "tntc": false,
   "temp_final": 71,
-  "label": "E10",
+  "label": "E10 · LED 10 мин · T фин 71°C",
   "seeding": 1,
   "img": "photos/20260930_12.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 1,
-  "led": 10
+  "led": 10,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_13",
@@ -200,12 +224,14 @@
   "col": 1,
   "tntc": false,
   "temp_final": 73,
-  "label": "G1",
+  "label": "G1 · LED 15 мин · T фин 73°C",
   "seeding": 1,
   "img": "photos/20260930_13.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 1,
-  "led": 15
+  "led": 15,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_14",
@@ -216,12 +242,14 @@
   "col": 4,
   "tntc": false,
   "temp_final": 73,
-  "label": "G4",
+  "label": "G4 · LED 15 мин · T фин 73°C",
   "seeding": 1,
   "img": "photos/20260930_14.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 2,
-  "led": 15
+  "led": 15,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_15",
@@ -232,12 +260,14 @@
   "col": 7,
   "tntc": false,
   "temp_final": 73,
-  "label": "G7",
+  "label": "G7 · LED 15 мин · T фин 73°C",
   "seeding": 1,
   "img": "photos/20260930_15.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 0,
-  "led": 15
+  "led": 15,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  },
  {
   "id": "20260930_16",
@@ -248,11 +278,13 @@
   "col": 10,
   "tntc": false,
   "temp_final": 73,
-  "label": "G10",
+  "label": "G10 · LED 15 мин · T фин 73°C",
   "seeding": 1,
   "img": "photos/20260930_16.jpg",
   "experiment": "2026.09.30_Sa_bf24_Mx200_Led5-10-15-ROS_6-4-2-0-1cfu",
   "count": 0,
-  "led": 15
+  "led": 15,
+  "substance": "MXene 200 мкг/мл (биоплёнка 24 ч)",
+  "treatment": "LED-лампа"
  }
 ]
