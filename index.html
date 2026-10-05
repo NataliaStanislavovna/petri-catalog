@@ -146,16 +146,16 @@ const cntLabel = c => c.tntc ? (c.count!=null ? `TNTC ~${c.count}` : 'TNTC') : (
 const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function fillFilters() {
-  const uniq = k => [...new Set(CARDS.map(c=>c[k]).filter(Boolean))].sort();
+  const uniq = k => [...new Set(CARDS.map(c=>c[k]).filter(v=>v!==null&&v!==undefined&&v!==''))].sort((a,b)=>Number(a)-Number(b));
   for (const [id,k] of [['f_org','organism'],['f_exp','experiment'],['f_led','led']]) {
     document.getElementById(id).innerHTML = '<option value="">все</option>' +
-      uniq(k).map(v=>`<option>${esc(v)}</option>`).join('');
+      uniq(k).map(v=>`<option value="${v}">${k==='led'? v+' мин' : v}</option>`).join('');
   }
 }
 function applyFilters() {
   const org=f_org.value, exp=f_exp.value, seed=f_seed.value, led=f_led.value;
   view = CARDS.filter(c => (!org||c.organism===org) && (!exp||c.experiment===exp) &&
-    (!seed||c.seeding==seed) && (!led||c.led===led)).sort(sortV);
+    (!seed||c.seeding==seed) && (!led||String(c.led)===String(led))).sort(sortV);
   centerIdx = Math.floor(view.length/2);
   document.getElementById('cnt').textContent = view.length;
   render();
@@ -174,13 +174,15 @@ function renderTape() {
   document.getElementById('tape').innerHTML =
     view.slice(from,to).map((c)=>cardHTML(c, view.indexOf(c)===centerIdx)).join('');
   document.querySelectorAll('.tcard').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      if (el.classList.contains('center')) openCard(el.dataset.id);
-      else { centerIdx = view.findIndex(c=>c.id===el.dataset.id); render();
-        // на вертикальной ленте прокрутить выбранную карточку в поле зрения
-        const el2 = document.querySelector('.tcard.center');
-        if (el2) el2.scrollIntoView({behavior:'smooth', block:'center'});
-      }
+    el.addEventListener('click', (e)=>{
+      // клик по фото или по номеру лунки (жирный текст) → открыть карточку
+      // клик по подписи/полю карточки → перелистывание (сдвиг центра к ней)
+      const onPhoto = e.target.tagName==='IMG' || e.target.closest('b');
+      if (onPhoto) { openCard(el.dataset.id); return; }
+      centerIdx = view.findIndex(c=>c.id===el.dataset.id); render();
+      // на вертикальной ленте прокрутить выбранную карточку в поле зрения
+      const el2 = document.querySelector('.tcard.center');
+      if (el2) el2.scrollIntoView({behavior:'smooth', block:'center'});
     });
   });
   // центр всегда в зоне видимости
